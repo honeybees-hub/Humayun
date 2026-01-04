@@ -61,7 +61,7 @@
                                 Contact Me
                             </button>
                         </a>
-                     
+
 
                     </div>
                 </div>
@@ -126,38 +126,40 @@
                     <span class="text-2xl font-bold hover:text-indigo-400 transition-colors cursor-default">GSAP</span>
                     <span
                         class="text-2xl font-bold hover:text-indigo-400 transition-colors cursor-default">Tailwind</span>
+
+                    <!-- Audio Status -->
+                    <div id="status" class="fixed top-24 left-8 text-xs text-indigo-400 z-40 max-w-xs"></div>
                 </div>
             </div>
         </section>
     </main>
-    <!-- Audio Status -->
-    <div id="status" class="fixed top-24 left-8 text-xs text-indigo-400 z-40 max-w-xs"></div>
-  <!-- song -->
-     <audio id="bgMusic" preload="auto" loop>
+
+    <!-- song -->
+    <audio id="bgMusic" preload="auto" loop>
         <source src="Dooron Dooron (PenduJatt.Com.Se).mp3" type="audio/mpeg">
     </audio>
 
     <script>
         const audio = document.getElementById('bgMusic');
         const status = document.getElementById('status');
-        
+
         // 1 minute 51 seconds = 111 seconds
         const startTime = 111;
 
         function startPlayback() {
             // Set volume to 77%
             audio.volume = 0.15;
-            
+
             // Set time to 1:51
             audio.currentTime = startTime;
-            
+
             audio.play().then(() => {
-                status.innerText = "Now playing 'Dooron Dooron' from 1:51 (Volume: 77%)";
+                status.innerText = "Now playing 'Dooron Dooron' (Volume: 15%)";
             }).catch(error => {
                 // If the 2-second auto-play is blocked, we still need a click fallback
                 console.log("Autoplay blocked by browser policy.");
                 status.innerText = "Browser blocked autoplay. Please click anywhere to hear the music.";
-                
+
                 // Add click listener only if the automatic attempt fails
                 document.addEventListener('click', () => {
                     audio.play();
@@ -175,7 +177,7 @@
             status.innerText = "Error: Please check the audio file path.";
         });
     </script>
-<!-- song  enD-->
+    <!-- song  enD-->
     <script src="logic.js"></script>
 </body>
 
