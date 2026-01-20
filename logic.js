@@ -152,12 +152,13 @@ function animate() {
 }
 
 // Entrance sequence
-window.onload = () => {
+window.addEventListener('load', () => {
     initThree();
 
     const tl = gsap.timeline();
 
     tl.to("#sub-header", { y: 0, duration: 1, ease: "power4.out" })
+        .to("#co-founder-title", { y: 0, duration: 1, ease: "power4.out" }, "-=0.8")
         .to("#main-title", { y: 0, duration: 1.2, ease: "power4.out" }, "-=0.8")
         .to("#profile-pic", { opacity: 1, duration: 1.5, ease: "power2.out" }, "-=1")
         .to("#hero-desc", { opacity: 0.7, y: 0, duration: 1 }, "-=0.8")
@@ -174,4 +175,46 @@ window.onload = () => {
         duration: 1.5,
         ease: "power3.out"
     });
-};
+
+    // Experience cards animation
+    gsap.to(".reveal-card", {
+        scrollTrigger: {
+            trigger: "#experience",
+            start: "top 80%",
+        },
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        stagger: 0.2,
+        ease: "power2.out"
+    });
+
+    // --- Audio Logic ---
+    const audio = document.getElementById('bgMusic');
+    const status = document.getElementById('status');
+    const startTime = 111; // 1:51
+
+    if (audio && status) {
+        const startPlayback = () => {
+            audio.volume = 0.3; // Set to a better default volume
+            audio.currentTime = startTime;
+
+            audio.play().then(() => {
+                status.innerText = "Now playing 'Dooron Dooron' (Volume: 30%)";
+            }).catch(() => {
+                status.innerText = "Click anywhere to enable audio experience.";
+                document.addEventListener('click', () => {
+                    audio.play();
+                    status.innerText = "Now playing 'Dooron Dooron' (Volume: 30%)";
+                }, { once: true });
+            });
+        };
+
+        // Try playing after a short delay
+        setTimeout(startPlayback, 2000);
+
+        audio.addEventListener('error', () => {
+            status.innerText = "Audio playback unavailable.";
+        });
+    }
+});
